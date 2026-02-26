@@ -20,4 +20,5 @@ const stage = from(build_container);
 
 stage.build("mkdir /build && cd /workspace && gcc -o /build/test src/test.c");
 stage.verifyElf("/build/test");
+stage.shell("/build/test");
 
