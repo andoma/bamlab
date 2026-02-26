@@ -16,9 +16,11 @@ build_container.apt([
   "ccache",
   "build-essential"]);
 
-const stage = from(build_container);
+for(name of ["test1", "test2", "test3"]) {
+  const stage = from(build_container);
+  stage.build(`mkdir /build && cd /workspace && gcc -o /build/test ${name}/${name}.c`, [name]);
+  stage.verifyElf("/build/test");
+  stage.shell("/build/test");
+}
 
-stage.build("mkdir /build && cd /workspace && gcc -o /build/test src/test.c");
-stage.verifyElf("/build/test");
-stage.shell("/build/test");
 
