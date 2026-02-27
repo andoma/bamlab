@@ -25,3 +25,9 @@ for(name of ["test1", "test2", "test3"]) {
   stage.verifyElf("/build/test");
   stage.shell("/build/test");
 }
+
+const app = from('node:22.22');
+app.workdir('tstest');
+app.npm();                          // installs node_modules into /app/node_modules
+app.build("pwd && npx tsc");
+app.build("node src/main.js");
