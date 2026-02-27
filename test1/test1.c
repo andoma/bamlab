@@ -4,6 +4,6 @@ int
 main(void)
 {
   printf("hello, world1\n");
-  fail
+  fail2
   return 0;
 }
