@@ -18,9 +18,10 @@ build_container.apt([
 
 for(name of ["test1", "test2", "test3"]) {
   const stage = from(build_container);
-  stage.build(`mkdir /build && cd /workspace && gcc -o /build/test ${name}/${name}.c`, [name]);
+  stage.build(`mkdir /build && cd /workspace && gcc -O2 -Wall -Werror -fdiagnostics-format=sarif-stderr -o /build/test ${name}/${name}.c`, {
+    paths: [name],
+    report:"build",
+  });
   stage.verifyElf("/build/test");
   stage.shell("/build/test");
 }
-
-
