@@ -110,7 +110,7 @@ struct Parser {
             if (!right)
                 return right;
             if (op == '+')
-                *left += *righty;
+                *left += *right;
             else
                 *left -= *right;
         }
