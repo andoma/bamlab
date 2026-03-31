@@ -11,7 +11,7 @@ toolchain.apt(["build-essential", "cmake", "ninja-build"]);
 
 // --- Build libcore (shared library + tests) ---
 
-const libcore = from(toolchain);
+const libcore = from(toolchain).name("libcore");
 libcore.cmake({
   sourceDir: "libcore",
   buildDir: "/build/libcore",
@@ -20,7 +20,6 @@ libcore.cmake({
   test: true,
   sarif: true,
   paths: ["libcore"],
-
 });
 
 // Install libcore headers + library into rootfs
@@ -30,7 +29,7 @@ libcore.build("cmake --install /build/libcore --prefix /usr/local", {
 
 // --- Build analyzer app ---
 
-const analyzer = from(libcore);
+const analyzer = from(libcore).name("analyzer");
 analyzer.cmake({
   sourceDir: "analyzer",
   buildDir: "/build/analyzer",
@@ -38,7 +37,6 @@ analyzer.cmake({
   buildType: "Release",
   sarif: true,
   paths: ["analyzer"],
-
 });
 
 // Quick smoke test
@@ -48,7 +46,7 @@ analyzer.build("echo 'hello world hello' | /build/analyzer/analyzer --freq", {
 
 // --- Build calculator app ---
 
-const calculator = from(libcore);
+const calculator = from(libcore).name("calculator");
 calculator.cmake({
   sourceDir: "calculator",
   buildDir: "/build/calculator",
@@ -56,7 +54,6 @@ calculator.cmake({
   buildType: "Release",
   sarif: true,
   paths: ["calculator"],
-
 });
 
 // Quick smoke test
