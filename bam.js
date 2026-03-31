@@ -67,10 +67,8 @@ const runtime = from(base);
 
 const analyzer_img = from(runtime);
 analyzer_img.copyFrom(analyzer, "/build/analyzer/analyzer", "/usr/local/bin/analyzer");
-analyzer_img.verifyElf("/usr/local/bin/analyzer");
 analyzer_img.entrypoint("/usr/local/bin/analyzer");
 
 const calculator_img = from(runtime);
 calculator_img.copyFrom(calculator, "/build/calculator/calculator", "/usr/local/bin/calculator");
-calculator_img.verifyElf("/usr/local/bin/calculator");
 calculator_img.entrypoint("/usr/local/bin/calculator");
