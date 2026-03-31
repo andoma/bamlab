@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+// Main for calculator
 int main(int argc, char *argv[])
 {
     if (argc > 1) {
