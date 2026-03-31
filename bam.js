@@ -12,19 +12,15 @@ toolchain.apt(["build-essential", "cmake", "ninja-build"]);
 // --- Build libcore (shared library + tests) ---
 
 const libcore = from(toolchain);
-libcore.build("cmake -G Ninja -S /workspace/libcore -B /build/libcore -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-fdiagnostics-format=sarif-stderr", {
-  paths: ["libcore"],
+libcore.cmake({
+  sourceDir: "libcore",
+  buildDir: "/build/libcore",
+  generator: "Ninja",
+  buildType: "Release",
+  test: true,
   sarif: true,
-  report: "libcore",
-});
-libcore.build("ninja -C /build/libcore", {
   paths: ["libcore"],
-  sarif: true,
-  report: "libcore",
-});
-libcore.build("ctest --test-dir /build/libcore --output-on-failure", {
-  paths: ["libcore"],
-  report: "libcore",
+
 });
 
 // Install libcore headers + library into rootfs
@@ -35,15 +31,14 @@ libcore.build("cmake --install /build/libcore --prefix /usr/local", {
 // --- Build analyzer app ---
 
 const analyzer = from(libcore);
-analyzer.build("cmake -G Ninja -S /workspace/analyzer -B /build/analyzer -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-fdiagnostics-format=sarif-stderr", {
-  paths: ["analyzer"],
+analyzer.cmake({
+  sourceDir: "analyzer",
+  buildDir: "/build/analyzer",
+  generator: "Ninja",
+  buildType: "Release",
   sarif: true,
-  report: "analyzer",
-});
-analyzer.build("ninja -C /build/analyzer", {
   paths: ["analyzer"],
-  sarif: true,
-  report: "analyzer",
+
 });
 
 // Quick smoke test
@@ -54,15 +49,14 @@ analyzer.build("echo 'hello world hello' | /build/analyzer/analyzer --freq", {
 // --- Build calculator app ---
 
 const calculator = from(libcore);
-calculator.build("cmake -G Ninja -S /workspace/calculator -B /build/calculator -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-fdiagnostics-format=sarif-stderr", {
-  paths: ["calculator"],
+calculator.cmake({
+  sourceDir: "calculator",
+  buildDir: "/build/calculator",
+  generator: "Ninja",
+  buildType: "Release",
   sarif: true,
-  report: "calculator",
-});
-calculator.build("ninja -C /build/calculator", {
   paths: ["calculator"],
-  sarif: true,
-  report: "calculator",
+
 });
 
 // Quick smoke test
